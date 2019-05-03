@@ -1,16 +1,22 @@
 import React from 'react';
 import Layout from './components/Layout';
-import InputBox from './components/InputBox';
-import RecordBox from './components/RecordBox';
-import ProgressBox from './components/ProgressBox';
+import InputBoxContainer from './containers/InputBoxContainer';
+import RecordBoxContainer from './containers/RecordBoxContainer';
+import ProgressBoxContainer from './containers/ProgressBoxContainer';
+import { Provider } from 'react-redux';
+import { configureStore } from './store';
+
+const store = configureStore();
 
 const App: React.FC = () => {
   return (
-    <Layout>
-      <InputBox />
-      <RecordBox />
-      <ProgressBox />
-    </Layout>
+    <Provider store={store}>
+      <Layout>
+        <ProgressBoxContainer />
+        <InputBoxContainer />
+        <RecordBoxContainer />
+      </Layout>
+    </Provider>
   );
 };
 
