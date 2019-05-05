@@ -14,7 +14,7 @@ const calcCaloriesTakenUntilYesterday = createSelector(
   [getFoods, getToday, getWeekStart],
   (foods, today, weekStart) => {
     const foodsUntilYesterday = foods.filter(
-      food => weekStart < food.date.getTime() && food.date.getTime() < today
+      food => weekStart <= food.date.getTime() && food.date.getTime() < today
     );
     return sumCalorie(foodsUntilYesterday);
   }
