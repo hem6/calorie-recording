@@ -37,7 +37,7 @@ const calcTodayCap = createSelector(
     const restCalories = WEEK_CAP - caloriesTakenUntilYesterday;
     const restDays = 7 - new Date(today).getDay();
 
-    const calculatedDailyCalorie = restCalories / restDays;
+    const calculatedDailyCalorie = Math.round(restCalories / restDays);
     const standardDailyCalorie = WEEK_CAP / 7;
 
     return Math.min(calculatedDailyCalorie, standardDailyCalorie);
