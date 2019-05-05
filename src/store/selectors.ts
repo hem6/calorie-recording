@@ -7,7 +7,7 @@ const getFoods = (state: AppState) => state.foods;
 const getToday = () => new Date().setHours(0, 0, 0, 0);
 const getWeekStart = createSelector(
   [getToday],
-  today => today - new Date().getDay() * 24 * 60 * 60 * 100
+  today => today - new Date().getDay() * 24 * 60 * 60 * 1000
 );
 
 const calcCaloriesTakenUntilYesterday = createSelector(
