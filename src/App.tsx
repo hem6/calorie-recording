@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import InputBoxContainer from './containers/InputBoxContainer';
 import RecordBoxContainer from './containers/RecordBoxContainer';
 import ProgressBoxContainer from './containers/ProgressBoxContainer';
+import DebugBox from './components/DebugBox';
 import { Provider } from 'react-redux';
 import { configureStore, AppState } from './store';
 
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         <ProgressBoxContainer />
         <InputBoxContainer />
         <RecordBoxContainer />
+        <DebugBox />
       </Layout>
     </Provider>
   );
