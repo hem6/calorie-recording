@@ -2,14 +2,14 @@ import { Reducer } from 'redux';
 import { ADD_FOOD, REMOVE_FOOD, addFood, removeFood } from './actions';
 
 type Actions = ReturnType<typeof addFood | typeof removeFood>;
-type Food = {
+export type Food = {
   id: number;
   date: Date;
   name: string;
   kcal: number;
 };
 
-type State = {
+export type State = {
   foods: Food[];
 };
 

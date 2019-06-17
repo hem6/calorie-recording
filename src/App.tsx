@@ -5,7 +5,7 @@ import RecordBoxContainer from './containers/RecordBoxContainer';
 import ProgressBoxContainer from './containers/ProgressBoxContainer';
 import DebugBox from './components/DebugBox';
 import { Provider } from 'react-redux';
-import { configureStore, AppState } from './store';
+import { configureStore, State } from './store';
 
 const persistedState = localStorage.getItem('state');
 const hydrateState = (stateStr: string | null) => {
@@ -14,7 +14,7 @@ const hydrateState = (stateStr: string | null) => {
   }
 
   const parsedState = JSON.parse(stateStr);
-  const hydratedState: AppState = {
+  const hydratedState: State = {
     ...parsedState,
     foods: parsedState.foods.map((food: any) => ({
       ...food,

@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
-import { reducer } from './reducer';
+import { reducer, State, Food } from './reducer';
 
-export type AppState = ReturnType<typeof reducer>;
-
-export const configureStore = (persistedState: AppState | undefined) =>
+export type State = State;
+export type Food = Food;
+export const configureStore = (persistedState: State | undefined) =>
   createStore(reducer, persistedState);

@@ -1,9 +1,9 @@
-import { AppState } from './index';
+import { State } from './index';
 import { createSelector } from 'reselect';
 
 const WEEK_CAP = 1800 * 7;
 
-const getFoods = (state: AppState) => state.foods;
+const getFoods = (state: State) => state.foods;
 const getToday = () => new Date().setHours(0, 0, 0, 0);
 const getWeekStart = createSelector(
   [getToday],
@@ -28,7 +28,7 @@ const calcCaloriesTakenToday = createSelector(
   }
 );
 
-const sumCalorie = (foods: AppState['foods']) =>
+const sumCalorie = (foods: State['foods']) =>
   foods.reduce((acc, food) => acc + food.kcal, 0);
 
 const calcTodayCap = createSelector(
