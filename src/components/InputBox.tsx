@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 
 export type Option = { label: string; kcal: number };
 type Props = { addFood: Function; options: Option[] };
@@ -13,6 +13,7 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
     isActive: false,
     filteredOptions: [] as Option[]
   });
+  const kcalRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = () => {
     const date = new Date(food.date);
@@ -41,6 +42,9 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
 
   const handleComplete = (option: Option) => {
     setFood({ ...food, name: option.label, kcal: String(option.kcal) });
+    if (kcalRef && kcalRef.current) {
+      kcalRef.current.focus();
+    }
   };
 
   return (
@@ -103,6 +107,7 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
                 placeholder='kcal'
                 value={food.kcal}
                 onChange={e => setFood({ ...food, kcal: e.target.value })}
+                ref={kcalRef}
               />
             </div>
           </div>
