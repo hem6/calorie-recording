@@ -22,8 +22,12 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
     setFood({ date: todayStr, name: '', kcal: '' });
   };
 
-  const uniqueOptionList = useMemo(() => {
-    return [...new Set(options)];
+  const uniqueOptionList: Option[] = useMemo(() => {
+    const uniqueLabelOptions = options.reduceRight(
+      (acc, opt) => ({ ...acc, [opt.label]: opt }),
+      {}
+    );
+    return Object.values(uniqueLabelOptions);
   }, [options]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
