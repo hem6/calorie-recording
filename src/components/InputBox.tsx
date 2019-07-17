@@ -78,7 +78,11 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
                     setAutocomplete({ ...autocomplete, isActive: true })
                   }
                   onBlur={() =>
-                    setAutocomplete({ ...autocomplete, isActive: false })
+                    setTimeout(
+                      () =>
+                        setAutocomplete({ ...autocomplete, isActive: false }),
+                      100
+                    )
                   }
                 />
               </div>
@@ -88,8 +92,7 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
                     {autocomplete.filteredOptions.map(item => (
                       <div
                         className='dropdown-item'
-                        onTouchStart={() => handleComplete(item)}
-                        onMouseDown={() => handleComplete(item)}
+                        onClick={() => handleComplete(item)}
                       >
                         {item.label} ({item.kcal}kcal)
                       </div>
