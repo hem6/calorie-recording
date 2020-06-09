@@ -7,14 +7,14 @@ const getFoods = (state: State) => state.foods;
 const getToday = () => new Date().setHours(0, 0, 0, 0);
 const getWeekStart = createSelector(
   [getToday],
-  today => today - new Date().getDay() * 24 * 60 * 60 * 1000
+  (today) => today - new Date().getDay() * 24 * 60 * 60 * 1000
 );
 
 const calcCaloriesTakenUntilYesterday = createSelector(
   [getFoods, getToday, getWeekStart],
   (foods, today, weekStart) => {
     const foodsUntilYesterday = foods.filter(
-      food => weekStart <= food.date.getTime() && food.date.getTime() < today
+      (food) => weekStart <= food.date.getTime() && food.date.getTime() < today
     );
     return sumCalorie(foodsUntilYesterday);
   }
@@ -23,7 +23,7 @@ const calcCaloriesTakenUntilYesterday = createSelector(
 const calcCaloriesTakenToday = createSelector(
   [getFoods, getToday],
   (foods, today) => {
-    const foodsToday = foods.filter(food => food.date.getTime() >= today);
+    const foodsToday = foods.filter((food) => food.date.getTime() >= today);
     return sumCalorie(foodsToday);
   }
 );
@@ -50,6 +50,6 @@ export const progressSelector = createSelector(
     todayCap: todayCap,
     weekCap: WEEK_CAP,
     today: caloriesTakenToday,
-    week: caloriesTakenUntilYesterday + caloriesTakenToday
+    week: caloriesTakenUntilYesterday + caloriesTakenToday,
   })
 );
