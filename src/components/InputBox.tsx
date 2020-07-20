@@ -11,7 +11,7 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
   const [food, setFood] = useState({ date: todayStr, name: '', kcal: '' });
   const [autocomplete, setAutocomplete] = useState({
     isActive: false,
-    filteredOptions: [] as Option[]
+    filteredOptions: [] as Option[],
   });
   const kcalRef = useRef<HTMLInputElement>(null);
 
@@ -33,7 +33,7 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
-    const filteredOptions = uniqueOptionList.filter(option =>
+    const filteredOptions = uniqueOptionList.filter((option) =>
       option.label.includes(input)
     );
     setFood({ ...food, name: input });
@@ -58,14 +58,15 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
                 type='text'
                 placeholder='日付'
                 value={food.date}
-                onChange={e => setFood({ ...food, date: e.target.value })}
+                onChange={(e) => setFood({ ...food, date: e.target.value })}
               />
             </div>
           </div>
           <div className='field'>
             <div
-              className={`dropdown is-block ${autocomplete.filteredOptions
-                .length > 0 && ' is-active'}`}
+              className={`dropdown is-block ${
+                autocomplete.filteredOptions.length > 0 && ' is-active'
+              }`}
             >
               <div className='dropdown-trriger'>
                 <input
@@ -89,7 +90,7 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
               {food.name.length > 0 && autocomplete.isActive && (
                 <div className='dropdown-menu'>
                   <div className='dropdown-content'>
-                    {autocomplete.filteredOptions.map(item => (
+                    {autocomplete.filteredOptions.map((item) => (
                       <div
                         className='dropdown-item'
                         onClick={() => handleComplete(item)}
@@ -109,16 +110,16 @@ const InputBox: React.FC<Props> = ({ addFood, options }) => {
                 type='text'
                 placeholder='kcal'
                 value={food.kcal}
-                onChange={e => setFood({ ...food, kcal: e.target.value })}
+                onChange={(e) => setFood({ ...food, kcal: e.target.value })}
                 ref={kcalRef}
               />
             </div>
           </div>
           <div className='field'>
             <div className='control'>
-              <a className='button is-info' onClick={handleSubmit}>
+              <button className='button is-info' onClick={handleSubmit}>
                 登録
-              </a>
+              </button>
             </div>
           </div>
         </div>

@@ -11,12 +11,15 @@ const RecordBox: React.FC<Props> = ({ foods, removeFood }) => {
       <h2 className='has-text-weight-bold'>過去ログ</h2>
       <table className='table is-fullwidth'>
         <tbody>
-          {foods.map(food => (
+          {foods.map((food) => (
             <tr key={food.id}>
               <td>{food.name}</td>
               <td>{food.kcal}</td>
               <td>
-                <a className='delete' onClick={() => removeFood(food.id)} />
+                <button
+                  className='delete'
+                  onClick={() => removeFood(food.id)}
+                />
               </td>
             </tr>
           ))}

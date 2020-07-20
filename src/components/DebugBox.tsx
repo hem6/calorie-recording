@@ -5,7 +5,9 @@ const DebugBox: React.FC = () => {
   return (
     <div className='box'>
       <h2 className='has-text-weight-bold'>デバッグ用</h2>
-      <a onClick={() => setState(!state)}>表示</a>
+      <button className='button is-small' onClick={() => setState(!state)}>
+        表示
+      </button>
       {state ? <p>{localStorage.getItem('state')}</p> : null}
     </div>
   );
