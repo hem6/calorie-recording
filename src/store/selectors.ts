@@ -1,13 +1,19 @@
 import { State } from './index';
 import { createSelector } from 'reselect';
 
-const WEEK_CAP = 1800 * 7;
+const DAYLY_CAP = 1800;
+const WEEK_CAP = DAYLY_CAP * 7;
 
 const getFoods = (state: State) => state.foods;
 const getToday = () => new Date().setHours(0, 0, 0, 0);
-const getWeekStart = createSelector(
+const getDayInWeek = createSelector(
   [getToday],
-  (today) => today - new Date().getDay() * 24 * 60 * 60 * 1000
+  (today) => (new Date(today).getDay() + 2) % 7
+);
+
+const getWeekStart = createSelector(
+  [getToday, getDayInWeek],
+  (today, dayInWeek) => today - dayInWeek * 24 * 60 * 60 * 1000
 );
 
 const calcCaloriesTakenUntilYesterday = createSelector(
@@ -32,24 +38,43 @@ const sumCalorie = (foods: State['foods']) =>
   foods.reduce((acc, food) => acc + food.kcal, 0);
 
 const calcTodayCap = createSelector(
-  [calcCaloriesTakenUntilYesterday, getToday],
-  (caloriesTakenUntilYesterday, today) => {
+  [calcCaloriesTakenUntilYesterday, getDayInWeek],
+  (caloriesTakenUntilYesterday, dayInWeek) => {
     const restCalories = WEEK_CAP - caloriesTakenUntilYesterday;
-    const restDays = 7 - new Date(today).getDay();
+    const restDays = 7 - dayInWeek;
 
     const calculatedDailyCalorie = Math.round(restCalories / restDays);
-    const standardDailyCalorie = WEEK_CAP / 7;
+    const standardDailyCalorie = DAYLY_CAP;
 
     return Math.min(calculatedDailyCalorie, standardDailyCalorie);
   }
 );
 
+const calcYesterdayResult = createSelector(
+  [calcCaloriesTakenUntilYesterday, getDayInWeek],
+  (caloriesTakenUntilYesterday, dayInWeek) => {
+    const yesterdayBorder = dayInWeek * DAYLY_CAP;
+    return caloriesTakenUntilYesterday - yesterdayBorder;
+  }
+);
+
 export const progressSelector = createSelector(
-  [calcTodayCap, calcCaloriesTakenToday, calcCaloriesTakenUntilYesterday],
-  (todayCap, caloriesTakenToday, caloriesTakenUntilYesterday) => ({
+  [
+    calcTodayCap,
+    calcCaloriesTakenToday,
+    calcCaloriesTakenUntilYesterday,
+    calcYesterdayResult,
+  ],
+  (
+    todayCap,
+    caloriesTakenToday,
+    caloriesTakenUntilYesterday,
+    yesterdayResult
+  ) => ({
     todayCap: todayCap,
     weekCap: WEEK_CAP,
     today: caloriesTakenToday,
     week: caloriesTakenUntilYesterday + caloriesTakenToday,
+    yesterdayResult: yesterdayResult,
   })
 );

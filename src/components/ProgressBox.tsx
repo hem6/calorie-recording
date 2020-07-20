@@ -4,11 +4,16 @@ type Props = {
   todayCap: number;
   week: number;
   weekCap: number;
+  yesterdayResult: number;
 };
 
-const daysN = new Date().getDay() + 1;
-
-const ProgressBox: React.FC<Props> = ({ today, todayCap, week, weekCap }) => (
+const ProgressBox: React.FC<Props> = ({
+  today,
+  todayCap,
+  week,
+  weekCap,
+  yesterdayResult,
+}) => (
   <div className='box'>
     <h2 className='has-text-weight-bold'>進捗</h2>
     <h3>
@@ -24,11 +29,8 @@ const ProgressBox: React.FC<Props> = ({ today, todayCap, week, weekCap }) => (
       value={today}
     />
     <h3>
-      今週 - {`${week}kcal / ${weekCap}kcal`}(標準対比:{' '}
-      {(weekCap / 7) * daysN <= week
-        ? `+${week - (weekCap / 7) * daysN}kcal`
-        : `-${(weekCap / 7) * daysN - week}kcal`}
-      )
+      今週 - {`${week}kcal / ${weekCap}kcal`}(昨日まで:
+      {`${yesterdayResult >= 0 ? '+' : ''}${yesterdayResult}`}kcal)
     </h3>
     <progress
       className={`progress ${week > weekCap ? 'is-danger' : 'is-info'}`}
